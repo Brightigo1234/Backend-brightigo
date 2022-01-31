@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 
 const app = express();
-app.use(cors);
+app.use(cors());
 app.use(bodyParser.json());
 dotenv.config();
 
@@ -23,7 +23,7 @@ mongoose
 const authRouter = require('./routes/auth.routes');
 const userRouter = require('./routes/user.routes');
 
-app.use('/', express.static('dist'));
+app.get('/', (req,res)=> req.json("Server is running"));
 app.use('/api', authRouter);
 app.use('/api', userRouter);
 
