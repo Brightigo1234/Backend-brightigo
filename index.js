@@ -1,11 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
-var cors = require('cors')
 
 const app = express();
-
 app.use(cors);
 app.use(bodyParser.json());
 dotenv.config();
@@ -22,9 +21,11 @@ mongoose
 
 //Load all routes
 const authRouter = require('./routes/auth.routes');
+const userRouter = require('./routes/user.routes');
 
-app.get('/', (req,res)=>{res.json("this is the backend of brightigo app")});
+app.use('/', express.static('dist'));
 app.use('/api', authRouter);
+app.use('/api', userRouter);
 
 app.listen(process.env.PORT || 8080, () => {
   console.log(`Listening on port ${process.env.PORT || 8080}!`);
