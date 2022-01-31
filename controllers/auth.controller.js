@@ -173,7 +173,8 @@ exports.loginController = (req, res) => {
           expiresIn: '7d', // token valud for 7 days set [] remember me and set it for 30 days
         }
       );
-      const { _id, profilePicture, phoneNumber, name, email, role } = user;
+      const { _id, profilePicture, phoneNumber, name, test, email, role } =
+        user;
 
       return res.json({
         token,
@@ -181,6 +182,7 @@ exports.loginController = (req, res) => {
           _id,
           profilePicture,
           phoneNumber,
+          test,
           name,
           email,
           role,
