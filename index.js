@@ -20,8 +20,7 @@ mongoose
 //Load all routes
 const authRouter = require('./routes/auth.routes');
 
-//app.use('/', express.static('dist'));
-
+app.get('/', (req,res)=>{res.json("this is the backend of brightigo app")});
 app.use('/api', authRouter);
 
 app.listen(process.env.PORT || 8080, () => {
