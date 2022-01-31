@@ -23,7 +23,7 @@ mongoose
 const authRouter = require('./routes/auth.routes');
 const userRouter = require('./routes/user.routes');
 
-app.get('/', (req,res)=> req.json("Server is running"));
+app.get('/', (req,res)=> res.json("Server is running"));
 app.use('/api', authRouter);
 app.use('/api', userRouter);
 
