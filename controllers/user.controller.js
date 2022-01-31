@@ -63,7 +63,8 @@ exports.updateController = (req, res) => {
 
 exports.updateUserScoreController = (req, res) => {
   const { id } = req.params;
-  const { test } = req.body;
+  const { score, max, percentage, grade } = req.body;
+
   User.findOne({ _id: id }, (err, user) => {
     if (err || !user) {
       console.log(err);
@@ -72,22 +73,16 @@ exports.updateUserScoreController = (req, res) => {
         error: 'User not found',
       });
     }
-    console.log(user.test);
-    if (!test.score) {
-      return res.status(400).json({
-        error: 'test score not added',
-      });
-    } else {
-      user.test.score = test.score;
-    }
-    if (!test.grade) {
+    console.log('grade - ', grade);
+    if (!grade) {
       return res.status(400).json({
         error: 'test grade not added',
       });
     } else {
-      user.test.grade = test.grade;
-      user.test.max = test.max;
-      user.test.percentage = test.percentage;
+      user.test.score = score;
+      user.test.grade = grade;
+      user.test.max = max;
+      user.test.percentage = percentage;
     }
 
     user.save((err, updatedUser) => {
@@ -99,7 +94,7 @@ exports.updateUserScoreController = (req, res) => {
       }
       updatedUser.hashed_password = undefined;
       updatedUser.salt = undefined;
-      res.json(updatedUser);
+      res.json({ message: 'test score added successfully' });
     });
   });
 };

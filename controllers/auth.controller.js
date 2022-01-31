@@ -40,7 +40,6 @@ exports.registerController = (req, res) => {
       }
     });
 
-    console.log('here');
     //GENERATE TOKEN
     const token = jwt.sign(
       {
@@ -57,7 +56,7 @@ exports.registerController = (req, res) => {
 
     // Email Data
     const emailData = {
-      from: 'team.brightigo@gmail.com',
+      from: 'Brightigo',
       to: email,
       subject: 'Brightigo Account activation link',
       html: `
@@ -69,18 +68,19 @@ exports.registerController = (req, res) => {
                 <p>${process.env.CLIENT_URL}</p>
             `,
     };
+    console.log(emailData);
+    console.log(process.env.MAILGUN_API_KEY);
     // send the email data
     mailgun
       .messages()
       .send(emailData)
       .then(() => {
-
         return res.json({
           message: `Email has been sent to ${email}`,
         });
       })
       .catch((err) => {
-        console.log(err);
+        console.log('mailgun error ', err);
         return res.status(400).json({
           error: errorHandler(err),
         });
@@ -334,6 +334,7 @@ const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
 exports.googleController = (req, res) => {
   const { idToken } = req.body;
+  console.log(idToken);
   client
     .verifyIdToken({
       idToken,
